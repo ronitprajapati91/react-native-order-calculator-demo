@@ -13,6 +13,8 @@
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		761780EF2CA45674006654EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EE2CA45674006654EF /* SceneDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9F34363430AC4BD300B50F05 /* OrderCalc.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F34363030AC4BB700B50F05 /* OrderCalc.m */; };
+		9F34363530AC4BD300B50F05 /* OrderCalc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F34363130AC4BB700B50F05 /* OrderCalc.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = DemoOrderCalc/AppDelegate.swift; sourceTree = "<group>"; };
 		761780EE2CA45674006654EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = DemoOrderCalc/SceneDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = DemoOrderCalc/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9F34363030AC4BB700B50F05 /* OrderCalc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OrderCalc.m; path = DemoOrderCalc/OrderCalc.m; sourceTree = "<group>"; };
+		9F34363130AC4BB700B50F05 /* OrderCalc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OrderCalc.swift; path = DemoOrderCalc/OrderCalc.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -73,6 +77,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				9F34363030AC4BB700B50F05 /* OrderCalc.m */,
+				9F34363130AC4BB700B50F05 /* OrderCalc.swift */,
 				13B07FAE1A68108700A75B9A /* DemoOrderCalc */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
@@ -249,6 +255,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F34363430AC4BD300B50F05 /* OrderCalc.m in Sources */,
+				9F34363530AC4BD300B50F05 /* OrderCalc.swift in Sources */,
 				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
 				761780EF2CA45674006654EF /* SceneDelegate.swift in Sources */,
 			);

@@ -1,97 +1,74 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# DemoOrderCalc
 
-# Getting Started
+A small React Native demo that shows how to share UI code while keeping business logic in native code. The order total (subtotal plus tax) is calculated in **Kotlin** on Android and **Swift** on iOS, and the screens are written in **TypeScript**.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Features
 
-## Step 1: Start Metro
+- **Home**: enter a subtotal and tax rate to see the total, and save it to history
+- **History**: list of saved totals (kept in memory only, cleared when the app closes)
+- **Settings**: set the default tax rate used on the Home screen
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Project structure
 
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+```
+DemoOrderCalc/
+├── App.tsx                          # navigation setup
+├── src/
+│   ├── context/OrderContext.tsx     # in-memory state (tax default, history)
+│   ├── hooks/useOrderTotal.ts       # calls the native calculation
+│   ├── native/orderCalc.ts          # typed wrapper around the native module
+│   └── screens/
+│       ├── HomeScreen.tsx
+│       ├── HistoryScreen.tsx
+│       └── SettingsScreen.tsx
+├── android/app/src/main/java/com/demoordercalc/
+│   ├── OrderCalcModule.kt           # tax logic in Kotlin (BigDecimal, HALF_UP)
+│   └── OrderCalcPackage.kt          # registers the module
+└── ios/DemoOrderCalc/
+    ├── OrderCalc.swift              # tax logic in Swift (NSDecimalNumber)
+    └── OrderCalc.m                  # exposes the Swift class to React Native
 ```
 
-## Step 2: Build and run your app
+## How it works
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+1. The screen calls `useOrderTotal` with the subtotal and tax rate.
+2. The hook calls `calculateTotal` in `src/native/orderCalc.ts`.
+3. That calls the native module on each platform, which returns the total rounded to two decimals.
+
+Money math is done with decimal types (`BigDecimal` on Android, `NSDecimalNumber` on iOS), not floating-point numbers.
+
+## Requirements
+
+- Node.js (LTS)
+- Xcode and CocoaPods (for iOS)
+- Android Studio with an Android emulator or a device with USB debugging on (for Android)
+
+Follow the [React Native environment setup guide](https://reactnative.dev/docs/set-up-your-environment) if you haven't set these up.
+
+## Getting started
+
+```bash
+git clone <your-repo-url>
+cd DemoOrderCalc
+npm install
+```
 
 ### Android
 
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+npx react-native run-android
 ```
 
 ### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```bash
+cd ios && pod install && cd ..
+npx react-native run-ios
 ```
 
-Then, and every time you update your native dependencies, run:
+If the app shows **"OrderCalc native module not found"**, the native code isn't registered. Do a full rebuild (not a Metro reload) and check that the native files are included in the build.
 
-```sh
-bundle exec pod install
-```
+## Notes
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Data is kept in memory only. Closing the app clears the history and resets the default tax.
+- This is a demo, so there are no tests or input validation beyond rejecting negative numbers in the native code.
